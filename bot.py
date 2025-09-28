@@ -1,18 +1,20 @@
 import os
-from aiogram import Bot, Dispatcher, types
+from aiogram import Bot, Dispatcher, types, Router
 from aiogram.fsm.storage.memory import MemoryStorage
 import pytz
 from datetime import datetime
 from aiohttp import web
 
-# Токен бота из переменной окружения
+# Токен бота
 BOT_TOKEN = os.getenv('BOT_TOKEN')
 if not BOT_TOKEN:
     raise ValueError("Токен бота не найден.")
 
+# Инициализация бота и диспетчера
 bot = Bot(token=BOT_TOKEN)
 storage = MemoryStorage()
 dp = Dispatcher(storage=storage)
+router = Router()  # Создаём роутер
 
 moscow_tz = pytz.timezone('Europe/Moscow')
 
@@ -26,11 +28,12 @@ bait_files = [f for f in os.listdir(BAITS_FOLDER) if f.endswith(('.jpg', '.jpeg'
 if not bait_files:
     raise ValueError(f"В папке {BAITS_FOLDER} нет фото.")
 
-@dp.message_handler(commands=['start'])
+# Регистрация обработчиков через роутер
+@router.message(commands=['start'])
 async def send_welcome(message: types.Message):
     await message.reply("Привет! Отправь время (например, 12:34) и ссылку, и я отправлю приманку!")
 
-@dp.message_handler()
+@router.message()
 async def handle_time_link(message: types.Message):
     text = message.text.strip()
     try:
@@ -55,6 +58,9 @@ async def handle_time_link(message: types.Message):
 
     except Exception as e:
         await message.reply(f"Ошибка: {str(e)}")
+
+# Регистрируем роутер в диспетчере
+dp.include_router(router)
 
 # Dummy веб-сервер
 async def dummy_web(request):
