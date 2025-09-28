@@ -67,4 +67,3 @@ if __name__ == '__main__':
     print("Бот запущен...")
     web.run_app(app, port=os.getenv('PORT', 8000))
     dp.run_polling()
-
