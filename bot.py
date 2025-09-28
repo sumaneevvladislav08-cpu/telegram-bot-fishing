@@ -5,8 +5,8 @@ import pytz
 from datetime import datetime
 from aiohttp import web
 
-# Токен бота
-BOT_TOKEN = os.getenv('8310809355:AAHu_5LR5Sbty_hIs3d2wvmX99Wl9oHV2RQ')
+# Токен бота из переменной окружения
+BOT_TOKEN = os.getenv('BOT_TOKEN')
 if not BOT_TOKEN:
     raise ValueError("Токен бота не найден.")
 
