@@ -6,7 +6,7 @@ from datetime import datetime
 from aiohttp import web
 
 # Токен бота
-BOT_TOKEN = os.getenv('BOT_TOKEN')
+BOT_TOKEN = os.getenv('8310809355:AAHu_5LR5Sbty_hIs3d2wvmX99Wl9oHV2RQ')
 if not BOT_TOKEN:
     raise ValueError("Токен бота не найден.")
 
@@ -67,3 +67,4 @@ if __name__ == '__main__':
     print("Бот запущен...")
     web.run_app(app, port=os.getenv('PORT', 8000))
     dp.run_polling()
+
