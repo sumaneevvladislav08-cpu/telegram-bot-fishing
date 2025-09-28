@@ -1,18 +1,18 @@
 import os
 from aiogram import Bot, Dispatcher, types
-from aiogram.contrib.fsm_storage.memory import MemoryStorage
+from aiogram.fsm.storage.memory import MemoryStorage  # Исправленный импорт
 import pytz
 from datetime import datetime
-from aiohttp import web  # Добавь для dummy сервера
+from aiohttp import web  # Для Web Service dummy сервера
 
 # Токен бота
-BOT_TOKEN = os.getenv('BOT_TOKEN')
+BOT_TOKEN = os.getenv('8310809355:AAHu_5LR5Sbty_hIs3d2wvmX99Wl9oHV2RQ')
 if not BOT_TOKEN:
     raise ValueError("Токен бота не найден.")
 
 bot = Bot(token=BOT_TOKEN)
 storage = MemoryStorage()
-dp = Dispatcher(bot, storage=storage)
+dp = Dispatcher(storage=storage)
 
 moscow_tz = pytz.timezone('Europe/Moscow')
 
@@ -65,5 +65,5 @@ app.add_routes([web.get('/', dummy_web)])
 
 if __name__ == '__main__':
     print("Бот запущен...")
-    web.run_app(app, port=os.getenv('PORT', 8000))  # Запускает dummy сервер на порт 8000
-    dp.run_polling()
+    web.run_app(app, port=os.getenv('PORT', 8000))  # Dummy сервер на порт Render
+    dp.run_polling()  # Бот работает параллельно
