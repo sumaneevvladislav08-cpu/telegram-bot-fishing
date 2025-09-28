@@ -1,12 +1,12 @@
 import os
 from aiogram import Bot, Dispatcher, types
-from aiogram.fsm.storage.memory import MemoryStorage  # Исправленный импорт
+from aiogram.fsm.storage.memory import MemoryStorage
 import pytz
 from datetime import datetime
-from aiohttp import web  # Для Web Service dummy сервера
+from aiohttp import web
 
 # Токен бота
-BOT_TOKEN = os.getenv('8310809355:AAHu_5LR5Sbty_hIs3d2wvmX99Wl9oHV2RQ')
+BOT_TOKEN = os.getenv('BOT_TOKEN')
 if not BOT_TOKEN:
     raise ValueError("Токен бота не найден.")
 
@@ -56,7 +56,7 @@ async def handle_time_link(message: types.Message):
     except Exception as e:
         await message.reply(f"Ошибка: {str(e)}")
 
-# Dummy веб-сервер для Web Service
+# Dummy веб-сервер
 async def dummy_web(request):
     return web.Response(text="Bot is running.")
 
@@ -65,5 +65,5 @@ app.add_routes([web.get('/', dummy_web)])
 
 if __name__ == '__main__':
     print("Бот запущен...")
-    web.run_app(app, port=os.getenv('PORT', 8000))  # Dummy сервер на порт Render
-    dp.run_polling()  # Бот работает параллельно
+    web.run_app(app, port=os.getenv('PORT', 8000))
+    dp.run_polling()
